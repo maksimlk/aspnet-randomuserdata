@@ -1,0 +1,36 @@
+﻿@model IndexModel
+@{
+	var end = Model.cursor > 20? Model.cursor + 9 : Model.cursor + 19;
+}
+
+@for (var i = Model.cursor; i <= end; i++)
+{
+	<tr aria-hidden="true"
+		@if (i == end)
+		{
+			<text>
+				hx-get="@Url.Page("Index", new{cursor = end + 1})"
+				hx-trigger="intersect once"
+				hx-swap="afterend"
+			</text>
+		}>
+		@{
+			var cur = i - Model.cursor;
+		}
+		<th>
+			@Model.randomRecords[cur].Id
+		</th>
+		<td>
+			@Model.randomRecords[cur].RandomIdentificator
+		</td>
+		<td>
+			@Model.randomRecords[cur].Name
+		</td>
+		<td>
+			@Model.randomRecords[cur].Address
+		</td>
+		<td>
+			@Model.randomRecords[cur].Phone
+		</td>
+	</tr>
+}
